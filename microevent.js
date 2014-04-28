@@ -13,21 +13,21 @@
         root.returnExports = factory();
     }
 }(this, function () {
-    function MicroEvent(){}
+    function MicroEvent() {}
 
     MicroEvent.prototype = {
         constructor: MicroEvent,
-        bind: function(event, fct){
+        on: function (event, fct) {
             this._events = this._events || {};
             this._events[event] = this._events[event] || [];
             this._events[event].push(fct);
         },
-        unbind: function(event, fct){
+        off: function (event, fct) {
             this._events = this._events || {};
-            if(event in this._events === false) { return; }
+            if (event in this._events === false) { return; }
             this._events[event].splice(this._events[event].indexOf(fct), 1);
         },
-        trigger: function(event /* , args... */){
+        trigger: function (event /* , args... */) {
             this._events = this._events || {};
             if (event in this._events === false) { return; }
             var callbacks = (this._events[event] || []).slice();
@@ -37,16 +37,16 @@
         }
     };
 
-    MicroEvent.mixin = function(destObject){
-        var props = ['bind', 'unbind', 'trigger'];
-        for(var i = 0; i < props.length; i ++){
-            if( typeof destObject === 'function' ){
+    MicroEvent.mixin = function (destObject) {
+        var props = ['on', 'off', 'trigger'];
+        for (var i = 0; i < props.length; i++) {
+            if (typeof destObject === 'function') {
                 destObject.prototype[props[i]] = MicroEvent.prototype[props[i]];
-            }else{
+            } else {
                 destObject[props[i]] = MicroEvent.prototype[props[i]];
             }
         }
-    }
+    };
 
     return MicroEvent;
 }));
