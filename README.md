@@ -1,14 +1,18 @@
 # MicroEvent.js
 
+**NOTE:** This is a fork of the original MicroEvent.js project by [Jerome
+Etienne](https://github.com/jeromeetienne). It has been forked to add tests and
+fix bugs.
+
 _MicroEvent.js_ is a event emitter library which provides the
 [observer pattern](http://en.wikipedia.org/wiki/Observer_pattern) to javascript objects.
 It works on node.js and browser. It is a single .js file containing
-a <a href="https://github.com/jeromeetienne/microevent.js/blob/master/microevent.js#L12-31">20 lines class</a>
-(only 321-bytes after minification+gzip). 
+a <a href="https://github.com/brandwatchltd/microevent.js/blob/master/microevent.js#L12-31">20 lines class</a>
+(only 321-bytes after minification+gzip).
 
 ## How to Use It
 
-You need a single file [microevent.js](https://github.com/jeromeetienne/microevent.js/raw/master/microevent.js).
+You need a single file [microevent.js](https://github.com/brandwatchltd/microevent.js/raw/master/microevent.js).
 Include it in a webpage via the usual script tag.
 
     <script src="microevent.js"></script>
@@ -17,12 +21,12 @@ To include it in a nodejs code isnt much harder
 
     var MicroEvent = require('./microevent.js')
 
-Now suppose you got a class `Foobar`, and you wish it to support the observer partern. do 
+Now suppose you got a class `Foobar`, and you wish it to support the observer partern. do
 
     MicroEvent.mixin(Foobar)
 
-That's it. The repository contains an [example in browser](https://github.com/jeromeetienne/microevent.js/blob/master/examples/example.html)
-and an [example in nodejs](https://github.com/jeromeetienne/microevent.js/blob/master/examples/example.js).
+That's it. The repository contains an [example in browser](https://github.com/brandwatchltd/microevent.js/blob/master/examples/example.html)
+and an [example in nodejs](https://github.com/brandwatchltd/microevent.js/blob/master/examples/example.js).
 Both use the same code in different contexts. Let me walk you thru it.
 
 ## Example
@@ -44,7 +48,7 @@ We mixin _MicroEvent_ into _Ticker_ and we are all set.
 Now lets actually use the _Ticker_ Class. First, create the object.
 
     var ticker = new Ticker();
-    
+
 and bind our _tick_ event with its data parameter
 
     ticker.bind('tick', function(date) {
@@ -59,8 +63,5 @@ And you will see this output:
 
 ## Conclusion
 
-MicroEvent.js is available on github <a href='https://github.com/jeromeetienne/microevent.js'>here</a>
-under <a href='https://github.com/jeromeetienne/microevent.js/blob/master/MIT-LICENSE.txt'>MIT license</a>.
-If you hit bugs, fill issues on github.
-Feel free to fork, modify and have fun with it :)
-
+MicroEvent.js is available on github: <https://github.com/brandwatchltd/microevent.js>
+under a [MIT license](./LICENSE). If you find any bugs, please file an issue on github.

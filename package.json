@@ -1,9 +1,14 @@
 {
   "name": "microevent",
-  "version": "1.0.0",
-  "description": "event emitter micro library (works in node+browser)",
+  "version": "1.0.1",
+  "description": "Event emitter micro library for node and the browser",
   "main": "microevent.js",
   "scripts": {
     "test": "node microevent-test.js"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/brandwatchltd/microevents.js.git"
+  },
+  "license": "MIT"
 }
