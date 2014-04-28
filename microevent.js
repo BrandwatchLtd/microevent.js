@@ -37,15 +37,16 @@
         }
     };
 
-    MicroEvent.mixin = function (destObject) {
-        var props = ['on', 'off', 'trigger'];
-        for (var i = 0; i < props.length; i++) {
-            if (typeof destObject === 'function') {
-                destObject.prototype[props[i]] = MicroEvent.prototype[props[i]];
-            } else {
-                destObject[props[i]] = MicroEvent.prototype[props[i]];
-            }
-        }
+    MicroEvent.mixin = function (target) {
+        var methods = ['on', 'off', 'trigger'];
+        var method;
+
+        target = typeof target === 'function' ? target.prototype : target;
+
+        do {
+            method = methods.pop();
+            target[method] = MicroEvent.prototype[method];
+        } while (methods.length);
     };
 
     return MicroEvent;
