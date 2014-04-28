@@ -1,0 +1,6 @@
+2014-04-28 v1.0.1
+
+ * Fix bug with unbinding event listeners within handlers (1098ea5).
+ * Remove debug version of the library (7902b90).
+ * Add UMD module definition (d3e810b).
+ * Add unit tests (4473232).
