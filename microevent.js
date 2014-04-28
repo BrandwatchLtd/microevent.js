@@ -1,3 +1,8 @@
+/* microevent.js - v1.0.1
+ * Copyright (c) 2011-2014 Jerome Etienne, Brandwatch Ltd
+ * Released under the MIT license
+ * More Information: https://github.com/BrandwatchLtd/microevent.js
+ */
 // Universal Module Definition: http://git.io/J7vtzw
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {

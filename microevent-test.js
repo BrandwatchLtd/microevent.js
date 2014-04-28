@@ -68,6 +68,22 @@ test('.trigger() allows handlers to be unbound in handler', function () {
     assert(C.called === 2, 'Expected C to be called twice');
 });
 
+test('.mixin() applies the methods to the provided object', function () {
+    var obj = {};
+    MicroEvent.mixin(obj);
+    assert(obj.bind === MicroEvent.prototype.bind, 'Expected the bind method to be present');
+    assert(obj.unbind === MicroEvent.prototype.unbind, 'Expected the unbind method to be present');
+    assert(obj.trigger === MicroEvent.prototype.trigger, 'Expected the trigger method to be present');
+});
+
+test('.mixin() applies the methods to the provided function prototype', function () {
+    function Klass() {}
+    MicroEvent.mixin(Klass);
+    assert(Klass.prototype.bind === MicroEvent.prototype.bind, 'Expected the bind method to be present');
+    assert(Klass.prototype.unbind === MicroEvent.prototype.unbind, 'Expected the unbind method to be present');
+    assert(Klass.prototype.trigger === MicroEvent.prototype.trigger, 'Expected the trigger method to be present');
+});
+
 // Run the tests.
 if (require.main === module) {
     run(test.suite);
