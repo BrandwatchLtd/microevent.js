@@ -35,7 +35,7 @@ test('.trigger() calls the handler once for each call', function () {
 
     events.trigger('suprise');
     events.trigger('suprise');
-    assert(handler.callCount === 2, 'Expected handler to be called twice');
+    assert(handler.called === 2, 'Expected handler to be called twice');
 });
 
 test('.trigger() passes additional arguments through to handler', function () {
@@ -48,6 +48,26 @@ test('.trigger() passes additional arguments through to handler', function () {
     assert(handler.args.lastCall[2] === 'three', 'Expected third argument of handler to be three');
 });
 
+test('.trigger() allows handlers to be unbound in handler', function () {
+    var A = createSpy();
+    var B = createSpy(function () { events.unbind('suprise', B); });
+    var C = createSpy();
+
+    events.bind('suprise', A);
+    events.bind('suprise', B);
+    events.bind('suprise', C);
+
+    events.trigger('suprise');
+    assert(A.called === 1, 'Expected A to be called once');
+    assert(B.called === 1, 'Expected B to be called once');
+    assert(C.called === 1, 'Expected C to be called once');
+
+    events.trigger('suprise');
+    assert(A.called === 2, 'Expected A to be called twice');
+    assert(B.called === 1, 'Expected B to be called once');
+    assert(C.called === 2, 'Expected C to be called twice');
+});
+
 // Run the tests.
 if (require.main === module) {
     run(test.suite);
@@ -55,14 +75,15 @@ if (require.main === module) {
 
 // Test Suite Helpers
 
-function createSpy() {
+function createSpy(fn) {
     return function spy() {
+        fn && fn.apply(this, arguments);
+
         var args = Array.prototype.slice.call(arguments);
         spy.args = (spy.args || []);
         spy.args.push(args);
         spy.args.lastCall = args;
-        spy.called = true;
-        spy.callCount = (spy.callCount || 0) + 1;
+        spy.called = (spy.called || 0) + 1;
     };
 }
 
