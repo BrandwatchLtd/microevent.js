@@ -1,5 +1,7 @@
 # MicroEvent.js
 
+[![Build Status](https://travis-ci.org/BrandwatchLtd/microevent.js.svg)](https://travis-ci.org/BrandwatchLtd/microevent.js)
+
 **NOTE:** This is a fork of the original MicroEvent.js project by [Jerome
 Etienne](https://github.com/jeromeetienne). It has been forked to add tests and
 fix bugs.
