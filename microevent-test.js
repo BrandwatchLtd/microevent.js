@@ -1,28 +1,30 @@
 var assert = require('assert');
 var format = require('util').format;
 var MicroEvent = require('./microevent');
-var events = new MicroEvent();
 
-test('.bind() allows a handler to be bound for an event', function () {
+test('.on() allows a handler to be bound for an event', function () {
+    var events = new MicroEvent();
     var handler = createSpy();
-    events.bind('suprise', handler);
+    events.on('suprise', handler);
     events.trigger('suprise');
     assert(handler.called, 'Expected handler to be called when event was triggered');
 });
 
-test('.unbind() removes a registered handler', function () {
+test('.off() removes a registered handler', function () {
+    var events = new MicroEvent();
     var handler = createSpy();
-    events.bind('suprise', handler);
-    events.unbind('suprise', handler);
+    events.on('suprise', handler);
+    events.off('suprise', handler);
     events.trigger('suprise');
     assert(!handler.called, 'Expected handler not to be called when event was triggered');
 });
 
 test('.trigger() calls registered handlers for an event name', function () {
+    var events = new MicroEvent();
     var handlerOne = createSpy();
     var handlerTwo = createSpy();
-    events.bind('suprise', handlerOne);
-    events.bind('suprise', handlerTwo);
+    events.on('suprise', handlerOne);
+    events.on('suprise', handlerTwo);
 
     events.trigger('suprise');
     assert(handlerOne.called, 'Expected handlerOne to be called when event was triggered');
@@ -30,8 +32,9 @@ test('.trigger() calls registered handlers for an event name', function () {
 });
 
 test('.trigger() calls the handler once for each call', function () {
+    var events = new MicroEvent();
     var handler = createSpy();
-    events.bind('suprise', handler);
+    events.on('suprise', handler);
 
     events.trigger('suprise');
     events.trigger('suprise');
@@ -39,8 +42,9 @@ test('.trigger() calls the handler once for each call', function () {
 });
 
 test('.trigger() passes additional arguments through to handler', function () {
+    var events = new MicroEvent();
     var handler = createSpy();
-    events.bind('suprise', handler);
+    events.on('suprise', handler);
 
     events.trigger('suprise', 'one', 'two', 'three');
     assert(handler.args.lastCall[0] === 'one', 'Expected first argument of handler to be one');
@@ -49,13 +53,14 @@ test('.trigger() passes additional arguments through to handler', function () {
 });
 
 test('.trigger() allows handlers to be unbound in handler', function () {
+    var events = new MicroEvent();
     var A = createSpy();
-    var B = createSpy(function () { events.unbind('suprise', B); });
+    var B = createSpy(function () { events.off('suprise', B); });
     var C = createSpy();
 
-    events.bind('suprise', A);
-    events.bind('suprise', B);
-    events.bind('suprise', C);
+    events.on('suprise', A);
+    events.on('suprise', B);
+    events.on('suprise', C);
 
     events.trigger('suprise');
     assert(A.called === 1, 'Expected A to be called once');
@@ -69,18 +74,20 @@ test('.trigger() allows handlers to be unbound in handler', function () {
 });
 
 test('.mixin() applies the methods to the provided object', function () {
+    var events = new MicroEvent();
     var obj = {};
     MicroEvent.mixin(obj);
-    assert(obj.bind === MicroEvent.prototype.bind, 'Expected the bind method to be present');
-    assert(obj.unbind === MicroEvent.prototype.unbind, 'Expected the unbind method to be present');
+    assert(obj.on === MicroEvent.prototype.on, 'Expected the on method to be present');
+    assert(obj.off === MicroEvent.prototype.off, 'Expected the off method to be present');
     assert(obj.trigger === MicroEvent.prototype.trigger, 'Expected the trigger method to be present');
 });
 
 test('.mixin() applies the methods to the provided function prototype', function () {
+    var events = new MicroEvent();
     function Klass() {}
     MicroEvent.mixin(Klass);
-    assert(Klass.prototype.bind === MicroEvent.prototype.bind, 'Expected the bind method to be present');
-    assert(Klass.prototype.unbind === MicroEvent.prototype.unbind, 'Expected the unbind method to be present');
+    assert(Klass.prototype.on === MicroEvent.prototype.on, 'Expected the on method to be present');
+    assert(Klass.prototype.off === MicroEvent.prototype.off, 'Expected the off method to be present');
     assert(Klass.prototype.trigger === MicroEvent.prototype.trigger, 'Expected the trigger method to be present');
 });
 
